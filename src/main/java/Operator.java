@@ -11,8 +11,14 @@ public class Operator implements Runnable {
 		try {
 			while (!Thread.currentThread().isInterrupted()) {
 				if (!atc.queue.isEmpty()) {
-					System.out.println(Thread.currentThread().getName() + " принимает вызов: " + atc.queue.poll());
-					Thread.sleep(SLEEP);
+					Long queue_value = atc.queue.poll();
+					if (queue_value != null) {
+						System.out.println(Thread.currentThread().getName() + " принимает вызов: " + queue_value);
+						Thread.sleep(SLEEP);
+					} else {
+						System.out.println("Звонки закончились");
+						break;
+					}
 				} else {
 					System.out.println("Звонки закончились");
 					break;
